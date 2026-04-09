@@ -5,9 +5,9 @@ public class Player : MonoBehaviour
 {
     //Player speed variables
     private float _playerSpeed;
-    private float _playerSpeedDefault = 0.5f;
-    private float _playerSpeedMaximum = 2;
-    private float _playerAcceleration = 0.01f;
+    private float _playerSpeedDefault = 2f;
+    private float _playerSpeedMaximum = 10;
+    private float _playerAcceleration = 0.1f;
 
     //player rotation
     private float _playerRotation = 20f;
@@ -31,8 +31,8 @@ public class Player : MonoBehaviour
     {
         //front and back is y, left and right is x
         Vector2 inputVector = GameInput.Instance.GetInputVector();
+        Vector2 pitchVector = GameInput.Instance.GetMouseDelta();
         float tiltInt = GameInput.Instance.GetTiltInt();
-        Debug.Log(tiltInt);
 
         if (inputVector.y == 1 && _playerSpeed < _playerSpeedMaximum)
         {
@@ -44,8 +44,18 @@ public class Player : MonoBehaviour
             _playerSpeed -= _playerAcceleration;
         }
 
-        transform.Rotate(transform.up, _playerRotation * inputVector.x * Time.deltaTime);
-        transform.Rotate(transform.forward, _playerRotation * tiltInt * Time.deltaTime);
+        //y axis
+        float yawRotation = _playerRotation *inputVector.x * Time.deltaTime;
+        //x axis
+        float pitchRotation = _playerRotation * pitchVector.y * Time.deltaTime;
+        //z axis
+        float tiltRotation = _playerRotation * tiltInt * Time.deltaTime;
+        transform.Rotate(pitchRotation, yawRotation, tiltRotation);
+        /*
+        transform.Rotate(Vector3.up, _playerRotation * inputVector.x * Time.deltaTime);
+        transform.Rotate(Vector3.forward, _playerRotation * tiltInt * Time.deltaTime);
+        transform.Rotate(Vector3.right,_playerRotation * pitchVector.y * Time.deltaTime);
+        */
 
         transform.position += Time.deltaTime * _playerSpeed * transform.forward;
     }

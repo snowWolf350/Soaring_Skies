@@ -109,6 +109,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""pitch"",
+                    ""type"": ""Value"",
+                    ""id"": ""ffa6d3cf-e326-4b07-927a-4874c2ecebce"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -254,6 +263,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""tilt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2470a83c-c88a-447d-8ffb-780543946df9"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -264,6 +284,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player = asset.FindActionMap("player", throwIfNotFound: true);
         m_player_move = m_player.FindAction("move", throwIfNotFound: true);
         m_player_tilt = m_player.FindAction("tilt", throwIfNotFound: true);
+        m_player_pitch = m_player.FindAction("pitch", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -346,6 +367,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_player_move;
     private readonly InputAction m_player_tilt;
+    private readonly InputAction m_player_pitch;
     /// <summary>
     /// Provides access to input actions defined in input action map "player".
     /// </summary>
@@ -365,6 +387,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "player/tilt".
         /// </summary>
         public InputAction @tilt => m_Wrapper.m_player_tilt;
+        /// <summary>
+        /// Provides access to the underlying input action "player/pitch".
+        /// </summary>
+        public InputAction @pitch => m_Wrapper.m_player_pitch;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -397,6 +423,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @tilt.started += instance.OnTilt;
             @tilt.performed += instance.OnTilt;
             @tilt.canceled += instance.OnTilt;
+            @pitch.started += instance.OnPitch;
+            @pitch.performed += instance.OnPitch;
+            @pitch.canceled += instance.OnPitch;
         }
 
         /// <summary>
@@ -414,6 +443,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @tilt.started -= instance.OnTilt;
             @tilt.performed -= instance.OnTilt;
             @tilt.canceled -= instance.OnTilt;
+            @pitch.started -= instance.OnPitch;
+            @pitch.performed -= instance.OnPitch;
+            @pitch.canceled -= instance.OnPitch;
         }
 
         /// <summary>
@@ -468,5 +500,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTilt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "pitch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPitch(InputAction.CallbackContext context);
     }
 }

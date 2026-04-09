@@ -16,11 +16,16 @@ public class GameInput : MonoBehaviour
         }
         Instance = this;
     }
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     private void OnEnable()
     {
         _playerInput.player.move.Enable();
         _playerInput.player.tilt.Enable();
+        _playerInput.player.pitch.Enable();
     }
 
     public Vector2 GetInputVector()
@@ -31,6 +36,11 @@ public class GameInput : MonoBehaviour
     public float GetTiltInt()
     {
         float tiltInt = _playerInput.player.tilt.ReadValue<float>();
-        return tiltInt;
+        return -tiltInt;
+    }
+
+    public Vector2 GetMouseDelta()
+    {
+        return -_playerInput.player.pitch.ReadValue<Vector2>();  
     }
 }
