@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameInput : MonoBehaviour
@@ -26,6 +27,7 @@ public class GameInput : MonoBehaviour
         _playerInput.player.move.Enable();
         _playerInput.player.tilt.Enable();
         _playerInput.player.pitch.Enable();
+        _playerInput.player.shoot.Enable();
     }
 
     public Vector2 GetInputVector()
@@ -42,5 +44,10 @@ public class GameInput : MonoBehaviour
     public Vector2 GetMouseDelta()
     {
         return -_playerInput.player.pitch.ReadValue<Vector2>();  
+    }
+
+    public bool PlayerIsShooting()
+    {
+        return _playerInput.player.shoot.IsInProgress();
     }
 }

@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,6 +13,13 @@ public class Player : MonoBehaviour
     //player rotation
     private float _playerRotation = 20f;
 
+    //shooting
+    [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] Transform _shootTransform;
+    private float _fireRate = 0.25f;
+    private float _fireTimer = 0;
+    private float _shootForce = 30;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +30,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        HandleShooting();
     }
 
     /// <summary>
@@ -58,5 +67,28 @@ public class Player : MonoBehaviour
         */
 
         transform.position += Time.deltaTime * _playerSpeed * transform.forward;
+    }
+
+    private void HandleShooting()
+    {
+        Debug.Log(GameInput.Instance.PlayerIsShooting());
+        if (!GameInput.Instance.PlayerIsShooting()) {
+            if (_fireTimer != 0) _fireTimer = 0;
+            return; }
+
+        _fireTimer += Time.deltaTime;
+        if (_fireTimer > _fireRate)
+        {
+            GameObject spawnedBullet = Instantiate(_bulletPrefab, _shootTransform.transform.position,Quaternion.LookRotation(_shootTransform.forward,_shootTransform.up));
+            spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce,ForceMode.Impulse);
+            _fireTimer = 0;
+        }
+       
+    }
+
+
+    private void GameInput_OnPlayerShoot(object sender, System.EventArgs e)
+    {
+        Instantiate(_bulletPrefab, _shootTransform);
     }
 }
