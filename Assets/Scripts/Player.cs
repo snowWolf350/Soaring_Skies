@@ -6,19 +6,30 @@ public class Player : MonoBehaviour
 {
     //Player speed variables
     private float _playerSpeed;
-    private float _playerSpeedDefault = 2f;
-    private float _playerSpeedMaximum = 10;
-    private float _playerAcceleration = 0.1f;
+    private float _playerSpeedDefault = 10f;
+    private float _playerSpeedMaximum = 20;
+    private float _playerAcceleration = 2f;
 
     //player rotation
-    private float _playerRotation = 20f;
+    float _yawRotation;
+    float _yawRotationRate = 50;
+    float _pitchRotation;
+    float _pitchRotationRate = 20;
+    float _tiltRotation;
+    float _tiltRotationRate = 20;
 
     //shooting
+    [Header("Shooting")]
     [SerializeField] GameObject _bulletPrefab;
     [SerializeField] Transform _shootTransform;
     private float _fireRate = 0.25f;
     private float _fireTimer = 0;
     private float _shootForce = 30;
+
+    [Header("Visuals")]
+    [SerializeField] Transform _propellorTransform;
+    [SerializeField] Transform _planeVisual;
+    private float _propellorSpeedScaler = 150;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,8 +42,12 @@ public class Player : MonoBehaviour
     {
         HandleMovement();
         HandleShooting();
-    }
 
+    }
+    private void LateUpdate()
+    {
+        HandlePropellor();
+    }
     /// <summary>
     /// Accelerates, deccelerates the player,decides yaw(y axis rotation)
     /// </summary>
@@ -43,35 +58,28 @@ public class Player : MonoBehaviour
         Vector2 pitchVector = GameInput.Instance.GetMouseDelta();
         float tiltInt = GameInput.Instance.GetTiltInt();
 
-        if (inputVector.y == 1 && _playerSpeed < _playerSpeedMaximum)
+        if (inputVector.y != 0)
         {
-            //accelerating
-            _playerSpeed += _playerAcceleration;
+            _playerSpeed += inputVector.y * _playerAcceleration * Time.deltaTime;
+            _playerSpeed = Mathf.Clamp(_playerSpeed, _playerSpeedDefault, _playerSpeedMaximum);
         }
-        else if (inputVector.y == -1 && _playerSpeed > _playerSpeedDefault)
-        {
-            _playerSpeed -= _playerAcceleration;
-        }
-
+        Debug.Log(inputVector);
+        Debug.Log(_playerSpeed);
         //y axis
-        float yawRotation = _playerRotation *inputVector.x * Time.deltaTime;
+        _yawRotation += _yawRotationRate *inputVector.x * Time.deltaTime;
         //x axis
-        float pitchRotation = _playerRotation * pitchVector.y * Time.deltaTime;
+        _pitchRotation += _pitchRotationRate * pitchVector.y * Time.deltaTime;
         //z axis
-        float tiltRotation = _playerRotation * tiltInt * Time.deltaTime;
-        transform.Rotate(pitchRotation, yawRotation, tiltRotation);
-        /*
-        transform.Rotate(Vector3.up, _playerRotation * inputVector.x * Time.deltaTime);
-        transform.Rotate(Vector3.forward, _playerRotation * tiltInt * Time.deltaTime);
-        transform.Rotate(Vector3.right,_playerRotation * pitchVector.y * Time.deltaTime);
-        */
+        _tiltRotation += _tiltRotationRate * tiltInt * Time.deltaTime;
 
-        transform.position += Time.deltaTime * _playerSpeed * transform.forward;
+        _pitchRotation = Mathf.Clamp(_pitchRotation, -85, 85);
+
+        transform.rotation = Quaternion.Euler(_pitchRotation, _yawRotation, _tiltRotation);
+        transform.position += transform.forward * Time.deltaTime * _playerSpeed;
     }
 
     private void HandleShooting()
     {
-        Debug.Log(GameInput.Instance.PlayerIsShooting());
         if (!GameInput.Instance.PlayerIsShooting()) {
             if (_fireTimer != 0) _fireTimer = 0;
             return; }
@@ -84,6 +92,11 @@ public class Player : MonoBehaviour
             _fireTimer = 0;
         }
        
+    }
+
+    private void HandlePropellor()
+    {
+        _propellorTransform.Rotate(0,0,_playerSpeed * Time.deltaTime * _propellorSpeedScaler);
     }
 
 
