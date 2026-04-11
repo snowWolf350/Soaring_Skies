@@ -241,7 +241,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""QE"",
+                    ""name"": ""DE"",
                     ""id"": ""a9e7e47d-c0e8-4d7d-a1a4-28cd6732eecb"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
@@ -254,7 +254,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""f041ef0d-2571-4f47-8ce1-e6c0802373eb"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -265,7 +265,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""398ea025-6a46-47aa-bfe7-fc8475861059"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform _shootTransform;
     private float _fireRate = 0.25f;
     private float _fireTimer = 0;
-    private float _shootForce = 30;
+    private float _shootForce = 70;
 
     [Header("Visuals")]
     [SerializeField] Transform _propellorTransform;
@@ -63,10 +63,8 @@ public class Player : MonoBehaviour
             _playerSpeed += inputVector.y * _playerAcceleration * Time.deltaTime;
             _playerSpeed = Mathf.Clamp(_playerSpeed, _playerSpeedDefault, _playerSpeedMaximum);
         }
-        Debug.Log(inputVector);
-        Debug.Log(_playerSpeed);
         //y axis
-        _yawRotation += _yawRotationRate *inputVector.x * Time.deltaTime;
+        _yawRotation += _yawRotationRate * -pitchVector.x * Time.deltaTime;
         //x axis
         _pitchRotation += _pitchRotationRate * pitchVector.y * Time.deltaTime;
         //z axis
