@@ -6,6 +6,7 @@ public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] Image BarImage;
     [SerializeField] GameObject HasProgressGameObject;
+    [SerializeField] bool _hideOn0 = true;
 
     IHasProgress HasProgress;
 
@@ -19,7 +20,7 @@ public class ProgressBarUI : MonoBehaviour
 
     private void HasProgress_onProgressChanged(object sender, IHasProgress.onProgressChangedEventArgs e)
     {
-        if (e.progressNormalized == 0)
+        if (e.progressNormalized == 0 && _hideOn0)
         {
             Hide();
         }

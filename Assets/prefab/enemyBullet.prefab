@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1193598543682404646}
   - component: {fileID: -2716049393781063315}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: enemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   _bulletImpactFX: {fileID: 2871013497116639782, guid: 771a528acb5d6ba42860c9a4fe85f3e5, type: 3}
+  _thisBulletDamageType: 0
 --- !u!1 &7444481954826090076
 GameObject:
   m_ObjectHideFlags: 0
