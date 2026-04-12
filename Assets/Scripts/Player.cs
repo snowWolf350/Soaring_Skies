@@ -1,8 +1,8 @@
 
-using System.Collections;
+using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IHasProgress
 {
     //Player speed variables
     private float _playerSpeed;
@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     //player rotation
     float _yawRotation;
-    float _yawRotationRate = 50;
+    float _yawRotationRate = 20;
     float _pitchRotation;
     float _pitchRotationRate = 20;
     float _tiltRotation;
@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     [SerializeField] Transform _propellorTransform;
     [SerializeField] Transform _planeVisual;
     private float _propellorSpeedScaler = 150;
+
+    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,6 +76,10 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(_pitchRotation, _yawRotation, _tiltRotation);
         transform.position += transform.forward * Time.deltaTime * _playerSpeed;
+        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+        {
+            progressNormalized = (_playerSpeed - _playerSpeedDefault) / (_playerSpeedMaximum - _playerSpeedDefault)
+        });
     }
 
     private void HandleShooting()
