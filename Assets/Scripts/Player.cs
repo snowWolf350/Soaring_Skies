@@ -24,7 +24,12 @@ public class Player : MonoBehaviour,IHasProgress
     [SerializeField] Transform _shootTransform;
     private float _fireRate = 0.25f;
     private float _fireTimer = 0;
+    private float _reloadTimer = 0;
+    private float _reloadTimeMax = 2.5f;
     private float _shootForce = 70;
+    private int _bulletCapacityMax = 20;
+    private int _bulletCapacity;
+    private bool isReloading;
 
     [Header("Visuals")]
     [SerializeField] Transform _propellorTransform;
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour,IHasProgress
     void Start()
     {
         _playerSpeed = _playerSpeedDefault;
+        _bulletCapacity = _bulletCapacityMax;
     }
 
     // Update is called once per frame
@@ -50,6 +56,9 @@ public class Player : MonoBehaviour,IHasProgress
     {
         HandlePropellor();
     }
+
+    #region |---Movement---|
+
     /// <summary>
     /// Accelerates, deccelerates the player,decides yaw(y axis rotation)
     /// </summary>
@@ -82,30 +91,54 @@ public class Player : MonoBehaviour,IHasProgress
         });
     }
 
-    private void HandleShooting()
-    {
-        if (!GameInput.Instance.PlayerIsShooting()) {
-            if (_fireTimer != 0) _fireTimer = 0;
-            return; }
-
-        _fireTimer += Time.deltaTime;
-        if (_fireTimer > _fireRate)
-        {
-            GameObject spawnedBullet = Instantiate(_bulletPrefab, _shootTransform.transform.position,Quaternion.LookRotation(_shootTransform.forward,_shootTransform.up));
-            spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce,ForceMode.Impulse);
-            _fireTimer = 0;
-        }
-       
-    }
-
     private void HandlePropellor()
     {
         _propellorTransform.Rotate(0,0,_playerSpeed * Time.deltaTime * _propellorSpeedScaler);
     }
+    #endregion
 
+    #region|---Shooting---|
 
-    private void GameInput_OnPlayerShoot(object sender, System.EventArgs e)
+    private void HandleShooting()
     {
-        Instantiate(_bulletPrefab, _shootTransform);
+        if (!GameInput.Instance.PlayerIsShooting())
+        {
+            if (_fireTimer != 0) _fireTimer = 0;
+            return;
+        }
+        Debug.Log("Reload timer = " + _reloadTimer + "Ammo Left = " + _bulletCapacity);
+        //reloading logic
+        if (isReloading)
+        {
+            _reloadTimer += Time.deltaTime;
+            if (_reloadTimer > _reloadTimeMax)
+            {
+                //done reloading 
+                isReloading = false;
+                _reloadTimer = 0;
+                _bulletCapacity = _bulletCapacityMax;
+            }
+            return;
+        }
+        //shooting logic
+
+        if (_bulletCapacity > 0)
+        {
+            //bullets left to shoot
+            _fireTimer += Time.deltaTime;
+            if (_fireTimer > _fireRate)
+            {
+                GameObject spawnedBullet = Instantiate(_bulletPrefab, _shootTransform.transform.position, Quaternion.LookRotation(_shootTransform.forward, _shootTransform.up));
+                spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce, ForceMode.Impulse);
+                _fireTimer = 0;
+                _bulletCapacity--;
+            }
+        }
+        else
+        {
+            isReloading = true;
+        }
     }
+
+    #endregion
 }
