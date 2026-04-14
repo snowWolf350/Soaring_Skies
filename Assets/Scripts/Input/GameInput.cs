@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
     public static GameInput Instance;
 
     PlayerInput _playerInput;
+    public static event EventHandler OnPlayerReload;
 
     private void Awake()
     {
@@ -20,6 +21,12 @@ public class GameInput : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        _playerInput.player.reload.performed += Reload_performed;
+    }
+
+    private void Reload_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlayerReload?.Invoke(this,EventArgs.Empty);
     }
 
     private void OnEnable()
@@ -28,7 +35,9 @@ public class GameInput : MonoBehaviour
         _playerInput.player.tilt.Enable();
         _playerInput.player.pitch.Enable();
         _playerInput.player.shoot.Enable();
+        _playerInput.player.reload.Enable();
     }
+
 
     public Vector2 GetInputVector()
     {

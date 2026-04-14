@@ -7,10 +7,10 @@ public class AmmoUI : MonoBehaviour
 
     private void Start()
     {
-        Player.onPlayerShoot += Player_onPlayerShoot;
+        PlayerShooting.onAmmoChange += Player_onPlayerShoot;
     }
 
-    private void Player_onPlayerShoot(object sender, Player.onPlayerShootEventArgs e)
+    private void Player_onPlayerShoot(object sender, PlayerShooting.onPlayerShootEventArgs e)
     {
         _ammoText.text = e.bulletAmount;
     }
