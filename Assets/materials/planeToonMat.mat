@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: toonMaterial
+  m_Name: planeToonMat
   m_Shader: {fileID: -6465566751694194690, guid: 579ad18e7a6e349408b956a9679b0a1e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

@@ -22,6 +22,11 @@ public class Player : MonoBehaviour,IHasProgress
     [Header("Shooting")]
     [SerializeField] GameObject _bulletPrefab;
     [SerializeField] Transform _shootTransform;
+    public static event EventHandler<onPlayerShootEventArgs> onPlayerShoot;
+    public class onPlayerShootEventArgs : EventArgs
+    {
+        public string bulletAmount;
+    }
     private float _fireRate = 0.25f;
     private float _fireTimer = 0;
     private float _reloadTimer = 0;
@@ -132,6 +137,10 @@ public class Player : MonoBehaviour,IHasProgress
                 spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce, ForceMode.Impulse);
                 _fireTimer = 0;
                 _bulletCapacity--;
+                onPlayerShoot?.Invoke(this, new onPlayerShootEventArgs
+                {
+                    bulletAmount = _bulletCapacity.ToString() + "/" + _bulletCapacityMax.ToString(),
+                });
             }
         }
         else
