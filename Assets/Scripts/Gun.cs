@@ -15,7 +15,7 @@ public class Gun : MonoBehaviour,IHasProgress
     float _playerShootRange = 80;
     private float _fireRate = .5f;
     private float _fireTimer = 0;
-    private float _shootForce = 20;
+    private float _shootForce = 10;
 
     private void Awake()
     {
