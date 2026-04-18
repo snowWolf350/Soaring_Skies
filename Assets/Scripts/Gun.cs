@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Gun : MonoBehaviour,IHasProgress
 {
@@ -13,9 +14,9 @@ public class Gun : MonoBehaviour,IHasProgress
     [SerializeField] Transform _shootTransform;
     [SerializeField] Transform _visualTransform;
     float _playerShootRange = 80;
-    private float _fireRate = .5f;
+    private float _fireRate = 3f;
     private float _fireTimer = 0;
-    private float _shootForce = 10;
+    private float _shootForce = 100;
 
     private void Awake()
     {
@@ -38,14 +39,16 @@ public class Gun : MonoBehaviour,IHasProgress
     }
     void Shoot()
     {
+        Vector3 shootDirection = Vector3.zero;
         _fireTimer += Time.deltaTime;
         if (_fireTimer > _fireRate)
         {
             GameObject spawnedBullet = Instantiate(_gunBullet, _shootTransform.transform.position, Quaternion.LookRotation(_shootTransform.forward, _shootTransform.up));
-            Vector3 shootDirection = _playerRef.transform.position - transform.position;
-            spawnedBullet.GetComponent<Rigidbody>().AddForce(shootDirection * _shootForce, ForceMode.Impulse);
+            shootDirection = _playerRef.transform.position - transform.position;
+            spawnedBullet.GetComponent<Rigidbody>().AddForce(shootDirection.normalized * _shootForce, ForceMode.Impulse);
             _fireTimer = 0;
         }
+        Debug.DrawLine(transform.position, shootDirection, Color.red,999999f);
     }
 
     private void _gunHealth_onDeath(object sender, EventArgs e)

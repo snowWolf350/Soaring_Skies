@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float _bulletLifetime = 10;
+    private float _bulletLifetime = 5;
     private int _bulletDamage = 20;
     [SerializeField] GameObject _bulletImpactFX;
 
