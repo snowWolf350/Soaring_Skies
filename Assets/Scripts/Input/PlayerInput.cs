@@ -111,7 +111,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""pitch"",
+                    ""name"": ""_pitch"",
                     ""type"": ""Value"",
                     ""id"": ""ffa6d3cf-e326-4b07-927a-4874c2ecebce"",
                     ""expectedControlType"": ""Vector2"",
@@ -289,7 +289,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""pitch"",
+                    ""action"": ""_pitch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -324,7 +324,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_player = asset.FindActionMap("player", throwIfNotFound: true);
         m_player_move = m_player.FindAction("move", throwIfNotFound: true);
         m_player_tilt = m_player.FindAction("tilt", throwIfNotFound: true);
-        m_player_pitch = m_player.FindAction("pitch", throwIfNotFound: true);
+        m_player_pitch = m_player.FindAction("_pitch", throwIfNotFound: true);
         m_player_shoot = m_player.FindAction("shoot", throwIfNotFound: true);
         m_player_reload = m_player.FindAction("reload", throwIfNotFound: true);
     }

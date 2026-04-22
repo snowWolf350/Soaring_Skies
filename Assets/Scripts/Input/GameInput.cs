@@ -7,6 +7,7 @@ public class GameInput : MonoBehaviour
 
     PlayerInput _playerInput;
     public static event EventHandler OnPlayerReload;
+    [SerializeField] bool _lockCamera = true;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class GameInput : MonoBehaviour
     }
     private void Start()
     {
+        if(_lockCamera)
         Cursor.lockState = CursorLockMode.Locked;
         _playerInput.player.reload.performed += Reload_performed;
     }
