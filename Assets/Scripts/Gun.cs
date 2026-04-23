@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,7 @@ public class Gun : MonoBehaviour,IHasProgress
     private Health _gunHealth;
 
     public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+    public static event EventHandler OnGunDeath;
 
     Player _playerRef;
 
@@ -39,20 +41,28 @@ public class Gun : MonoBehaviour,IHasProgress
     }
     void Shoot()
     {
-        Vector3 shootDirection = Vector3.zero;
+        Vector3 shootDirection = _playerRef.transform.position - _shootTransform.position;
+
         _fireTimer += Time.deltaTime;
+
         if (_fireTimer > _fireRate)
         {
-            GameObject spawnedBullet = Instantiate(_gunBullet, _shootTransform.transform.position, Quaternion.LookRotation(_shootTransform.forward, _shootTransform.up));
-            shootDirection = _playerRef.transform.position - transform.position;
+            GameObject spawnedBullet = Instantiate(
+                _gunBullet,
+                _shootTransform.position,
+                Quaternion.LookRotation(shootDirection, Vector3.up)
+            );
+
             spawnedBullet.GetComponent<Rigidbody>().AddForce(shootDirection.normalized * _shootForce, ForceMode.Impulse);
+
             _fireTimer = 0;
         }
-        Debug.DrawLine(transform.position, shootDirection, Color.red,999999f);
+        _visualTransform.up = shootDirection;
     }
 
     private void _gunHealth_onDeath(object sender, EventArgs e)
     {
+        OnGunDeath?.Invoke(this, EventArgs.Empty);
         Destroy(gameObject);
     }
 
