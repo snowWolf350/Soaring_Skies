@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class PlayerShooting : MonoBehaviour
     public static event EventHandler<onPlayerShootEventArgs> onAmmoChange;
     public class onPlayerShootEventArgs : EventArgs
     {
-        public string bulletAmount;
+        public int bulletAmount;
     }
     private float _fireRate = 0.25f;
     private float _fireTimer = 0;
@@ -44,7 +45,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void HandleShooting()
     {
-        Debug.Log("Reload timer = " + _reloadTimer + "Ammo Left = " + _bulletCapacity);
+        Debug.Log("Reload timer = " + _reloadTimer);
         //reloading logic
         if (isReloading)
         {
@@ -57,7 +58,7 @@ public class PlayerShooting : MonoBehaviour
                 _bulletCapacity = _bulletCapacityMax;
                 onAmmoChange?.Invoke(this, new onPlayerShootEventArgs
                 {
-                    bulletAmount = _bulletCapacity.ToString() + "/" + _bulletCapacityMax.ToString(),
+                    bulletAmount = _bulletCapacity,
                 });
             }
             return;
@@ -80,11 +81,12 @@ public class PlayerShooting : MonoBehaviour
                 GameObject spawnedBullet = Instantiate(_bulletPrefab, _shootTransform.transform.position, Quaternion.LookRotation(_shootTransform.forward, _shootTransform.up));
                 spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce, ForceMode.Impulse);
                 _fireTimer = 0;
-                _bulletCapacity--;
                 onAmmoChange?.Invoke(this, new onPlayerShootEventArgs
                 {
-                    bulletAmount = _bulletCapacity.ToString() + "/" + _bulletCapacityMax.ToString(),
+
+                    bulletAmount = _bulletCapacity
                 });
+                _bulletCapacity--;
             }
         }
         else

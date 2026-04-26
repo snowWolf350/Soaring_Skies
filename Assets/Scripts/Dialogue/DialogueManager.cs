@@ -8,13 +8,17 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance { get; private set; }
 
+    [Header("Text elements")]
     [SerializeField] TextMeshProUGUI _nameText;
     [SerializeField] TextMeshProUGUI _dialougeText;
+    [Header("Image elements")]
     [SerializeField] Image _characterImage;
     [SerializeField] Image _particleImage;
+    [SerializeField] Transform characterImage;
+    [Header("animator elements")]
     [SerializeField] Animator _dialogueBoxAnimator;
     [SerializeField] Animator _characterAnimator;
-    [SerializeField] Transform characterImage;
+
     bool _dialogueon;
     bool _dialogueDone = false;
     float _typingSpeed = 0.02f;

@@ -4,14 +4,21 @@ using UnityEngine;
 public class AmmoUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _ammoText;
+    int _ammoMax = 20;
 
     private void Start()
     {
-        PlayerShooting.onAmmoChange += Player_onPlayerShoot;
+        PlayerShooting.onAmmoChange += Player_onAmmoChane;
     }
 
-    private void Player_onPlayerShoot(object sender, PlayerShooting.onPlayerShootEventArgs e)
+    private void Player_onAmmoChane(object sender, PlayerShooting.onPlayerShootEventArgs e)
     {
-        _ammoText.text = e.bulletAmount;
+        if(e.bulletAmount == 1)
+        {
+            _ammoText.text = "Reload !";
+            return;
+        }
+
+        _ammoText.text = e.bulletAmount.ToString() + "/" + _ammoMax.ToString();
     }
 }
