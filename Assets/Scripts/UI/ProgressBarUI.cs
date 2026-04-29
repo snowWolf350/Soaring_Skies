@@ -13,7 +13,7 @@ public class ProgressBarUI : MonoBehaviour
     private void Start()
     {
         HasProgress = HasProgressGameObject.GetComponent<IHasProgress>();
-        HasProgress.onProgressChanged += HasProgress_onProgressChanged;
+        HasProgress.onSpeedChanged += HasProgress_onProgressChanged;
         BarImage.fillAmount = 1;
         Hide();
     }

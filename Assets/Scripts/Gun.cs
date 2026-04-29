@@ -7,7 +7,7 @@ public class Gun : MonoBehaviour,IHasProgress
 {
     private Health _gunHealth;
 
-    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onSpeedChanged;
     public static event EventHandler OnGunDeath;
 
     Player _playerRef;
@@ -69,7 +69,7 @@ public class Gun : MonoBehaviour,IHasProgress
     public void TakeDamage(int damageAmount)
     {
         _gunHealth.TakeDamage(damageAmount);
-        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+        onSpeedChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
         {
             progressNormalized = _gunHealth.GetHealthNormalized()
         });

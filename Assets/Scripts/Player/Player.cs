@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour,IHasProgress
 {
+    public static Player Instance;
+
     //Player speed variables
     private float _playerSpeed;
     private float _playerSpeedDefault = 10f;
@@ -25,9 +27,18 @@ public class Player : MonoBehaviour,IHasProgress
     [SerializeField] Transform _planeVisual;
     private float _propellorSpeedScaler = 150;
 
-    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onProgressChanged;
+    public event EventHandler<IHasProgress.onProgressChangedEventArgs> onSpeedChanged;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(Instance.gameObject);
+        }
+        Instance = this;
+    }
+
     void Start()
     {
         _playerSpeed = _playerSpeedDefault;
@@ -71,7 +82,7 @@ public class Player : MonoBehaviour,IHasProgress
 
         transform.rotation = Quaternion.Euler(_pitchRotation, _yawRotation, _tiltRotation);
         transform.position += transform.forward * Time.deltaTime * _playerSpeed;
-        onProgressChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
+        onSpeedChanged?.Invoke(this, new IHasProgress.onProgressChangedEventArgs
         {
             progressNormalized = (_playerSpeed - _playerSpeedDefault) / (_playerSpeedMaximum - _playerSpeedDefault)
         });

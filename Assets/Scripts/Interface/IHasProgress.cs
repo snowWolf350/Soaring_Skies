@@ -1,9 +1,8 @@
 using System;
-using UnityEngine;
 
 public interface IHasProgress 
 {
-    public event EventHandler<onProgressChangedEventArgs> onProgressChanged;
+    public event EventHandler<onProgressChangedEventArgs> onSpeedChanged;
 
     public class onProgressChangedEventArgs : EventArgs
     {
