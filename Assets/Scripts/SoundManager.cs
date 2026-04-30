@@ -4,7 +4,7 @@ public class SoundManager : MonoBehaviour
 {
     [Header("Player Sounds")]
     [SerializeField] AudioSource _propellorSource;
-    float _defaultPropellorVolume = 0.15f;
+    float _defaultPropellorVolume = 0.05f;
     float _volumeIncrease = 0.05f;
 
     private void Start()
