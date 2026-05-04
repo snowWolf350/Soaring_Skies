@@ -281,6 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   _propellorSource: {fileID: 837545560}
+  _gunSound: {fileID: 8300000, guid: cb61c92ab1d7dfa43a7d49792d7b2a58, type: 3}
+  _reloadSound: {fileID: 8300000, guid: ad23d1da9d9046543bc9913741b2f335, type: 3}
 --- !u!4 &31376734
 Transform:
   m_ObjectHideFlags: 0

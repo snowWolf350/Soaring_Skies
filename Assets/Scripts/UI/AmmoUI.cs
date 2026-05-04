@@ -11,7 +11,7 @@ public class AmmoUI : MonoBehaviour
         PlayerShooting.onAmmoChange += Player_onAmmoChane;
     }
 
-    private void Player_onAmmoChane(object sender, PlayerShooting.onPlayerShootEventArgs e)
+    private void Player_onAmmoChane(object sender, PlayerShooting.onAmmoChangeEventArgs e)
     {
         if(e.bulletAmount == 1)
         {

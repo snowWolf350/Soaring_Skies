@@ -7,8 +7,10 @@ public class PlayerShooting : MonoBehaviour
     [Header("Shooting")]
     [SerializeField] GameObject _bulletPrefab;
     [SerializeField] Transform _shootTransform;
-    public static event EventHandler<onPlayerShootEventArgs> onAmmoChange;
-    public class onPlayerShootEventArgs : EventArgs
+    public static event EventHandler<onAmmoChangeEventArgs> onAmmoChange;
+    public static event EventHandler onPlayerShoot;
+    public static event EventHandler onPlayerReload;
+    public class onAmmoChangeEventArgs : EventArgs
     {
         public int bulletAmount;
     }
@@ -49,6 +51,11 @@ public class PlayerShooting : MonoBehaviour
         //reloading logic
         if (isReloading)
         {
+            if (_reloadTimer == 0)
+            {
+                onPlayerReload?.Invoke(this,EventArgs.Empty);
+            }
+
             _reloadTimer += Time.deltaTime;
             if (_reloadTimer > _reloadTimeMax)
             {
@@ -56,7 +63,7 @@ public class PlayerShooting : MonoBehaviour
                 isReloading = false;
                 _reloadTimer = 0;
                 _bulletCapacity = _bulletCapacityMax;
-                onAmmoChange?.Invoke(this, new onPlayerShootEventArgs
+                onAmmoChange?.Invoke(this, new onAmmoChangeEventArgs
                 {
                     bulletAmount = _bulletCapacity,
                 });
@@ -81,9 +88,9 @@ public class PlayerShooting : MonoBehaviour
                 GameObject spawnedBullet = Instantiate(_bulletPrefab, _shootTransform.transform.position, Quaternion.LookRotation(_shootTransform.forward, _shootTransform.up));
                 spawnedBullet.GetComponent<Rigidbody>().AddForce(_shootTransform.forward * _shootForce, ForceMode.Impulse);
                 _fireTimer = 0;
-                onAmmoChange?.Invoke(this, new onPlayerShootEventArgs
+                onPlayerShoot?.Invoke(this,EventArgs.Empty);
+                onAmmoChange?.Invoke(this, new onAmmoChangeEventArgs
                 {
-
                     bulletAmount = _bulletCapacity
                 });
                 _bulletCapacity--;
