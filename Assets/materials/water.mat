@@ -40,10 +40,10 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _rippleContrast: 5
-    - _rippleDensity: 70
-    - _rippleSpeed: 1.5
-    - _waveSpeed: 15
+    - _rippleContrast: 11.3
+    - _rippleDensity: 400
+    - _rippleSpeed: 1.75
+    - _waveSpeed: 0.015
     m_Colors:
     - _darkBlue: {r: 0.22684944, g: 0.6086132, b: 0.79622644, a: 1}
     - _lightBlue: {r: 0.42506933, g: 0.7195994, b: 0.8566037, a: 1}
