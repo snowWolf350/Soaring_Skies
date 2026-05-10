@@ -323,6 +323,7 @@ MonoBehaviour:
   _gunBullet: {fileID: 6705555440140275986, guid: 88cdc6aaf10a1994ab86c8c6ce9fcb45, type: 3}
   _shootTransform: {fileID: 7314330999898364035}
   _visualTransform: {fileID: 6221372986161764726}
+  _explosionFX: {fileID: 9160674589528942972, guid: 048cf7ff716fb764488555c300983dcc, type: 3}
 --- !u!65 &6561773358034254541
 BoxCollider:
   m_ObjectHideFlags: 0

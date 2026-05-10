@@ -15,6 +15,7 @@ public class Gun : MonoBehaviour,IHasProgress
     [SerializeField] GameObject _gunBullet;
     [SerializeField] Transform _shootTransform;
     [SerializeField] Transform _visualTransform;
+    [SerializeField] GameObject _explosionFX;
     float _playerShootRange = 80;
     private float _fireRate = 3f;
     private float _fireTimer = 0;
@@ -63,6 +64,7 @@ public class Gun : MonoBehaviour,IHasProgress
     private void _gunHealth_onDeath(object sender, EventArgs e)
     {
         OnGunDeath?.Invoke(this, EventArgs.Empty);
+        Instantiate(_explosionFX, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
