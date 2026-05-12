@@ -13,6 +13,7 @@ public class LocalSceneManager : MonoBehaviour
     public void LoadNextScene()
     {
         int buildIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        Debug.Log(buildIndex);
         SceneManager.LoadScene(buildIndex);
     }
 }

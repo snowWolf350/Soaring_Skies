@@ -47,7 +47,6 @@ public class PlayerShooting : MonoBehaviour
 
     private void HandleShooting()
     {
-        Debug.Log("Reload timer = " + _reloadTimer);
         //reloading logic
         if (isReloading)
         {
