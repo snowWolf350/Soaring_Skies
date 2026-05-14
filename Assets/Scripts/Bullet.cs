@@ -40,7 +40,11 @@ public class Bullet : MonoBehaviour
                     Instantiate(_bulletImpactFX, collision.GetContact(0).point, Quaternion.identity);
                     Destroy(gameObject);
                 }
-                else if(collision.transform.TryGetComponent(out Player player2))
+                else if(collision.transform.TryGetComponent(out weakSpots weakspot))
+                {
+                    weakspot.GetHealth().TakeDamage(_bulletDamage);
+                }
+                else if (collision.transform.TryGetComponent(out Player player2))
                 {
                     //player Hit Himself
                     return;

@@ -1,8 +1,5 @@
 using System;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UIElements;
-
 public class Gun : MonoBehaviour,IHasProgress
 {
     private Health _gunHealth;
