@@ -8,3 +8,4 @@ Things i learnt in this project -
 <img src="images/toonShade.png" width = "400"></br>
 2.shooting -</br>
 ........
+i have maths tomorrow dam 
