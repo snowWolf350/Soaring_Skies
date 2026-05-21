@@ -9,3 +9,4 @@ Things i learnt in this project -
 2.shooting -</br>
 ........
 i have maths tomorrow dam 
+todays commit is just a read me update
