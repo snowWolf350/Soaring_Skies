@@ -8,7 +8,4 @@ Things i learnt in this project -
 <img src="images/toonShade.png" width = "400"></br>
 2.shooting -</br>
 ........
-i have maths tomorrow dam 
-todays commit is just a read me update
-again read me 
-Once again 
+I ended up quitting the project because i got exhausted working on it.
