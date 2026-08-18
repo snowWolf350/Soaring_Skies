@@ -9,3 +9,4 @@ Things i learnt in this project -
 2.shooting -</br>
 ........
 I ended up quitting the project because i got exhausted working on it.
+It is really hard to stay Motivated as an indie dev 
